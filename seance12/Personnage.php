@@ -2,28 +2,25 @@
 
 abstract class Personnage implements iPersonnage
 {
-
     protected $typePersonnage;
-    protected $nbPtDeVie;
-    protected $nbPtDeForce;
+    protected $nbPtDeVie=100;
+    protected $nbPtDeForce=100;
     protected $x;
     protected $y;
     static $nbPersonnages;
-    protected $attributs = [];
+    protected $attributs=array();
 
-    /**
-     * @param $typePersonnage
-     * @param $nbPtDeVie
-     * @param $nbPtDeForce
-     * @param $x
-     * @param $y
-     * @param array $attributs
-     */
     public function __construct($typePersonnage, $nbPtDeVie, $nbPtDeForce)
     {
-        $this->typePersonnage = $typePersonnage;
-        $this->nbPtDeVie = $nbPtDeVie;
-        $this->nbPtDeForce = $nbPtDeForce;
+        $this->setTypePersonnage($typePersonnage);
+        $this->setNbPtDeVie($nbPtDeVie);
+        $this->setNbPtDeForce($nbPtDeForce);
+        self::$nbPersonnages++;
+    }
+
+    public function __destruct()
+    {
+        self::$nbPersonnages--;
     }
 
     /**
@@ -43,7 +40,7 @@ abstract class Personnage implements iPersonnage
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getNbPtDeVie()
     {
@@ -51,7 +48,7 @@ abstract class Personnage implements iPersonnage
     }
 
     /**
-     * @param mixed $nbPtDeVie
+     * @param int $nbPtDeVie
      */
     public function setNbPtDeVie($nbPtDeVie)
     {
@@ -59,7 +56,7 @@ abstract class Personnage implements iPersonnage
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getNbPtDeForce()
     {
@@ -67,11 +64,59 @@ abstract class Personnage implements iPersonnage
     }
 
     /**
-     * @param mixed $nbPtDeForce
+     * @param int $nbPtDeForce
      */
     public function setNbPtDeForce($nbPtDeForce)
     {
         $this->nbPtDeForce = $nbPtDeForce;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getX()
+    {
+        return $this->x;
+    }
+
+    /**
+     * @param mixed $x
+     */
+    public function setX($x)
+    {
+        $this->x = $x;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getY()
+    {
+        return $this->y;
+    }
+
+    /**
+     * @param mixed $y
+     */
+    public function setY($y)
+    {
+        $this->y = $y;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNbPersonnages()
+    {
+        return $this->nbPersonnages;
+    }
+
+    /**
+     * @param mixed $nbPersonnages
+     */
+    public function setNbPersonnages($nbPersonnages)
+    {
+        $this->nbPersonnages = $nbPersonnages;
     }
 
     /**
@@ -90,137 +135,36 @@ abstract class Personnage implements iPersonnage
         $this->attributs = $attributs;
     }
 
-    /**
-     * @return mixed
-     */
-    public static function getNbPersonnages()
+    public function place($x, $y)
     {
-        return self::$nbPersonnages;
+        $this->x=$x;
+        $this->y=$y;
     }
 
-    /**
-     * @param mixed $nbPersonnages
-     */
-    public static function setNbPersonnages($nbPersonnages)
+    public function deplaceX($x = 1)
     {
-        self::$nbPersonnages = $nbPersonnages;
+    $this->x+=$x;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getX()
+    public function deplaceY($y = 1)
     {
-        return $this->x;
+        $this->y+=$y;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getY()
+    public function affichePersonnage()
     {
-        return $this->y;
+        return '<em>La race :</em> '.$this->getTypePersonnage().'<br> <em>La vie :</em> <b>'.$this->getNbPtDeVie().'</b><br> <em>La force :</em> <b>'.$this->getNbPtDeForce().'</b><br>';
     }
 
-    /**
-     * @param mixed $x
-     */
-    public function setX($x)
+
+    public function afficherAttributs()
     {
-        $this->x = $x;
-    }
-
-    /**
-     * @param mixed $y
-     */
-    public function setY($y)
-    {
-        $this->y = $y;
-    }
-
-    public function place($x, $y){
-        $this->x = $x;
-        $this->y = $y;
-    }
-    public function deplaceX($x = 1){
-        $this->x += $x;
-    }
-    public function deplaceY($y = 1){
-        $this->y += $y;
-    }
-    public function affichePersonnage(){
-        return 'Le type du personnage est '.$this->typePersonnage.', son nombre de points de vie : '.$this->nbPtDeVie.' et son nombre de points de force : '.$this->nbPtDeForce;
-    }
-    public function addAttribut($attributs){
-        $this->attributs[] = $attributs;
-    }
-    public function afficherAttributs(){
-        foreach ($this->attributs as $attribut){
-            return $attribut->affiche();
-        }
-    }
-}
-
-class Humain extends Personnage {
-
-    private $nbArmes;
-    private $nbProtections;
-
-    public function __construct()
-    {
-        parent::__construct('Humain', 100, 100);
-    }
-
-    public function addAttribut($attributs)
-    {
-        if ($attributs instanceof Arme && $this->nbArmes<2)
+        $lignes=' <b>La liste des attributs : </b><br>';
+        foreach ($this->attributs as $values)
         {
-            parent::addAttribut($attributs); // TODO: Change the autogenerated stub
-        } elseif($attributs instanceof Protection && $this->nbProtections<1) {
-            parent::addAttribut($attributs); // TODO: Change the autogenerated stub
-        } else {
-            echo 'L\'Humain n\'accepte que les attributs de type Armes et Protection, il est également possible que les capacités de possesions de l\'humain soient atteintes !';
+            $lignes.=$values->affiche();
+
         }
-    }
-}
-
-class Elfe extends Personnage {
-
-    public function __construct()
-    {
-        parent::__construct('Elfe', 120, 80);
-    }
-
-    public function addAttribut($attributs)
-    {
-        if ($attributs instanceof Magie)
-        {
-            parent::addAttribut($attributs); // TODO: Change the autogenerated stub
-        } else {
-            echo 'Uniquement des attributs de magie sont possible';
-        }
-    }
-}
-
-class Gobelin extends Personnage {
-
-    private $nbArmes;
-    private $nbProtections;
-
-    public function __construct()
-    {
-        parent::__construct('Gobelin', 80, 120);
-    }
-
-    public function addAttribut($attributs)
-    {
-        if ($attributs instanceof Arme && $this->nbArmes<1)
-        {
-            parent::addAttribut($attributs); // TODO: Change the autogenerated stub
-        } elseif($attributs instanceof Protection && $this->nbProtections<1) {
-            parent::addAttribut($attributs); // TODO: Change the autogenerated stub
-        } else {
-            echo 'Le Gobelin n\'accepte que les attributs de type Armes et Protection, il est également possible que les capacités de possesions du gobelin soient atteintes !';
-        }
+        return $lignes;
     }
 }
