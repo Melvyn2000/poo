@@ -33,6 +33,7 @@ Affichage::addPersonnage($perso3);
 
 $perso4 = new Humain();
 $perso4->place(1, 2);
+var_dump($perso4);
 Affichage::addPersonnage($perso4);
 Affichage::affichePlateau();
 

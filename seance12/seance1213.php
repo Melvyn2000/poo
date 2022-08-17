@@ -11,7 +11,13 @@
 spl_autoload_register(function ($class_name) {
     require $class_name . '.php';
 });
+require 'iPersonnage.php';
+require 'Personnage.php';
+require 'Attribut.php';
+require 'Affichage.php';
+require 'PersonnageManager.php';
 ?>
+
 
 <ul>
     <li><a href="ajout_personnage.php">Ajouter un personnage</a></li>

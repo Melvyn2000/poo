@@ -19,11 +19,12 @@ require 'PersonnageManager.php';
 $pm = new PersonnageManager('localhost', 'root', 'root', 'poo2');
 $perso1 = new Gobelin();
 $perso1->place(2, 3);
-
+var_dump($perso1);
 $id = $pm->addPersonnage($perso1);
 echo '<p>Personnage ajouté avec l\'id numéro '.$id.'</p>';
 
 $perso2 = $pm->getById($id);
+var_dump($perso2);
 Affichage::addPersonnage($perso2);
 Affichage::affichePlateau();
 

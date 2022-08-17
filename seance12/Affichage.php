@@ -6,7 +6,7 @@ abstract class Affichage
     protected static $listePersonnage = [];
     const LONGUEUR_PLATEAU = 8;
     const LARGEUR_PLATEAU = 8;
-    const MAX_PERSONNAGE = 4;
+    const MAX_PERSONNAGE = 20;
 
     public static function addPersonnage($personnage)
     {
