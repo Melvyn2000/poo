@@ -10,7 +10,7 @@
 </head>
 <body>
 <?php
-header( "refresh:5;url=ajout_personnage.php" );
+//header( "refresh:5;url=ajout_personnage.php" );
 echo 'You\'ll be redirected in about 5 secs. If not, click <a href="Ajout_personnage.php">here</a>.';
 ?>
 <?php
@@ -19,6 +19,9 @@ require 'Personnage.php';
 require 'Attribut.php';
 require 'Affichage.php';
 require 'PersonnageManager.php';
+require 'Elfe.php';
+require 'Humain.php';
+require 'Gobelin.php';
 
 $typePersonnage = $_GET['typePersonnage'];
 $x = $_GET['x'];
@@ -27,11 +30,6 @@ $attributs = $_GET['attributs'];
 $nomAttributs = $_GET['nomAttributs'];
 $nbDegats = $_GET['nbDegats'];
 $nbProtections = $_GET['nbProtections'];
-
-$host  = $_SERVER['HTTP_HOST'];
-$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-$extra = 'ajout_personnage.php';
-//header('Location:.".$host.$uri/$extra."');
 
 echo 'Le type de personnage : '.$typePersonnage.'<br>';
 echo 'Le placement en X : '.$x.'<br>';
@@ -55,22 +53,8 @@ switch ($typePersonnage){
         $perso1 = new Humain();
         break;
 }
-
+var_dump($perso1);
 $perso1->place($x, $y);
-
-/*foreach ($attributs as $value) {
-    switch ($value){
-        case 'A':
-            $att = new Arme();
-            break;
-        case 'P':
-            $att = new Protection();
-            break;
-        case 'M':
-            $att = new Magie();
-            break;
-    }
-}*/
 
 switch ($attributs){
     case 'A':

@@ -117,7 +117,7 @@ class PersonnageManager
         {
             $tableau[] = $this->getById($data['id']);
         }
-        var_dump($tableau);
+        //var_dump($tableau);
         return $tableau;
     }
 }
